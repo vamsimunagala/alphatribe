@@ -9,6 +9,9 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const authMiddleware = require('./middlewares/authMiddleware');
 require('dotenv').config();
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+
 
 const app = express();
 
@@ -37,7 +40,23 @@ app.get('/', (req, res) => {
 });
 
 // Server and Socket.io setup
-const server = app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server running on port ${process.env.PORT || 3000}`);
-});
+const server = app.listen(process.env.PORT,()=>{
+  console.log(`server is running on port:http://localhost:${process.env.PORT}`);
+})
 socket.init(server);
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Stock Discussion Platform API',
+      version: '1.0.0',
+      description: 'API documentation for the Stock Discussion Platform',
+    },
+  },
+  apis: ['./routes/*.js'], // Path to the API docs
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
