@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post.title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <h1><%= post.title %> - <%= post.stockSymbol %></h1>
+  <p><%= post.description %></p>
+  <p>Tags: <%= post.tags.join(', ') %></p>
+  <p>Likes: <%= post.likesCount %></p>
+
+  <h2>Comments</h2>
+  <ul>
+    <% post.comments.forEach(comment => { %>
+      <li><%= comment.comment %> - by <%= comment.user.username %></li>
+    <% }) %>
+  </ul>
+
+  <h3>Add a Comment</h3>
+  <form action="/posts/<%= post._id %>/comments" method="POST">
+    <textarea name="comment" required></textarea>
+    <button type="submit">Add Comment</button>
+  </form>
+
+  <a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>

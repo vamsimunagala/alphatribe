@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <h1>Welcome, <%= user.username %>!</h1>
+  <a href="/logout">Logout</a>
+  <a href="/posts/create">Create a New Post</a>
+
+  <h2>Posts:</h2>
+  <ul>
+    <% posts.forEach(post => { %>
+      <li>
+        <a href="/posts/<%= post._id %>"><%= post.title %> - <%= post.stockSymbol %></a>
+        <p>Tags: <%= post.tags.join(', ') %></p>
+        <p>Likes: <%= post.likesCount %></p>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>
